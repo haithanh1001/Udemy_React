@@ -18,11 +18,24 @@ class MyComponent extends React.Component {
         })
         console.log(">>>this state: ", this.state);
     }
+    handleOnChangeInput =(event)=> {
+        this.setState({
+            name: event.target.value,
+        })
+    }
+    handleOnSubmit = (event)=>{
+        event.preventDefault();
+        console.log(">>> state: ",this.state);
+    }
     render(){
         return (
             <div> my first component
                 My name is {this.state.name} and my age is {this.state.age}
                 <button onClick={this.handleClick}>Click me</button>
+                <form action="" onSubmit={(e)=>this.handleOnSubmit(e)}>
+                    <input type="text" onChange={(event)=> this.handleOnChangeInput(event)} />
+                    <button>Submit</button>
+                </form>
             </div>
         );
     }
