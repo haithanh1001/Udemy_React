@@ -1,6 +1,6 @@
 import React from "react";
-import "./DisplayInfor.scss"
-import logo from "../../src/logo.svg"
+import "./DisplayInfor.scss";
+import logo from "../../src/logo.svg";
 class DisplayInfor extends React.Component {
   state = {
     isShowHide: true,
@@ -15,13 +15,13 @@ class DisplayInfor extends React.Component {
     const { listUsers } = this.props;
     // console.log(listUsers);
     return (
-      <div className='display-infor-container'>
+      <div className="display-infor-container">
         <img src={logo} alt="" />
         <button onClick={(e) => this.handleShowHide(e)}>
           {this.state.isShowHide === true ? "Hide" : "Show"}
         </button>
         {this.state.isShowHide && (
-          <div>
+          <>
             {listUsers.map((user) => {
               // console.log(">>>Check map user: ", user);
               return (
@@ -31,7 +31,7 @@ class DisplayInfor extends React.Component {
                 </div>
               );
             })}
-          </div>
+          </>
         )}
       </div>
     );

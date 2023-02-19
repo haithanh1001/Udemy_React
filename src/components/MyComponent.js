@@ -10,19 +10,23 @@ class MyComponent extends React.Component {
       { id: 4, name: "Trung Tu le", age: 19 },
     ],
   };
-  handleAddNewUser = (userObj) =>{
+  handleAddNewUser = (userObj) => {
     this.setState({
-      listUsers: [...this.state.listUsers,userObj]
-    })
-  }
+      listUsers: [...this.state.listUsers, userObj],
+    });
+  };
   render() {
-    const {listUsers} = this.state;
+    const { listUsers } = this.state;
     return (
-      <div>
-        <AddUserInfor handleAddNewUser={this.handleAddNewUser}/>
-        <hr/>
-        <DisplayInfor listUsers={listUsers} />
-      </div>
+      <React.Fragment>
+        <div className="a">
+          <AddUserInfor handleAddNewUser={this.handleAddNewUser} />
+        </div>
+        <hr />
+        <div className="b">
+          <DisplayInfor listUsers={listUsers} />
+        </div>
+      </React.Fragment>
     );
   }
 }
