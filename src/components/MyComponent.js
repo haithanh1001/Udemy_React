@@ -17,8 +17,11 @@ class MyComponent extends React.Component {
   };
   render() {
     const { listUsers } = this.state;
+    const test = 45;
+    const test1 = "bi nguyen la toi";
     return (
       <React.Fragment>
+        {JSON.stringify(listUsers)}
         <div className="a">
           <AddUserInfor handleAddNewUser={this.handleAddNewUser} />
         </div>
