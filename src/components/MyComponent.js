@@ -11,23 +11,34 @@ class MyComponent extends React.Component {
     ],
   };
   handleAddNewUser = (userObj) => {
+    console.log(userObj);
     this.setState({
-      listUsers: [...this.state.listUsers, userObj],
+      listUsers: [userObj, ...this.state.listUsers],
+    });
+  };
+
+  handleDeleteUser = (userId) => {
+    let newList = this.state.listUsers.filter((item) => item.id !== userId);
+    this.setState({
+      listUsers: newList,
     });
   };
   render() {
     const { listUsers } = this.state;
-    const test = 45;
-    const test1 = "bi nguyen la toi";
     return (
       <React.Fragment>
-        {JSON.stringify(listUsers)}
         <div className="a">
-          <AddUserInfor handleAddNewUser={this.handleAddNewUser} />
+          <AddUserInfor
+            listUsers={listUsers}
+            handleAddNewUser={this.handleAddNewUser}
+          />
         </div>
         <hr />
         <div className="b">
-          <DisplayInfor listUsers={listUsers} />
+          <DisplayInfor
+            listUsers={listUsers}
+            handleDeleteUser={this.handleDeleteUser}
+          />
         </div>
       </React.Fragment>
     );

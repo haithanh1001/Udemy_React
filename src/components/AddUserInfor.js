@@ -18,11 +18,10 @@ class AddUserInfor extends React.Component {
   };
   handleOnSubmit = (event) => {
     event.preventDefault();
-    console.log(">>> state: ", this.state);
     this.props.handleAddNewUser({
-      id: Math.floor(Math.random()*100+1),
+      id: this.props.listUsers.length + 1,
       name: this.state.name,
-      age: +this.state.age
+      age: +this.state.age,
     });
   };
   render() {
