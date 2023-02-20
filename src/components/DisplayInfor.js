@@ -1,4 +1,5 @@
 import React from "react";
+import { useState } from "react";
 import "./DisplayInfor.scss";
 
 // class DisplayInfor extends React.Component {
@@ -40,9 +41,22 @@ import "./DisplayInfor.scss";
 
 const DisplayInfor = (props) => {
   const { listUsers } = props;
+  const [isShowHideListUser, setShowHideListUser] = useState(true);
+  const handleShowHideListUser = () => {
+    setShowHideListUser(!isShowHideListUser);
+  };
   return (
     <div className="display-infor-container">
-      {true && (
+      <div>
+        <button onClick={() => handleShowHideListUser()}>
+          <span>
+            {isShowHideListUser === true
+              ? "Hide List Users"
+              : "Show List Users"}
+          </span>
+        </button>
+      </div>
+      {isShowHideListUser && (
         <>
           {listUsers.map((user) => {
             // console.log(">>>Check map user: ", user);
