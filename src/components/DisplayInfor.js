@@ -48,11 +48,16 @@ const DisplayInfor = (props) => {
   };
 
   useEffect(() => {
-    if (listUsers.length === 0) {
+    if (listUsers.length == 0) {
       alert("Oh no!!!");
     }
     console.log(">>call me effect");
   }, [listUsers]);
+
+  useEffect(() => {
+    console.log(">>call me effect");
+  }, []);
+
   console.log(">>>call me render");
   return (
     <div className="display-infor-container">
