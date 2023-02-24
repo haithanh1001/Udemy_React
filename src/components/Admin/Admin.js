@@ -1,5 +1,5 @@
 import { useState } from "react";
-import SideBar from "./Sidebar";
+import SideBar from "./SideBar";
 import "./Admin.scss";
 import { FaBars } from "react-icons/fa";
 const Admin = (props) => {
