@@ -67,7 +67,6 @@ body {
         font-weight: 300;
       }
       .title-3 {
-        border: none;
         button {
           border-radius: 5px;
           margin-right: 15px;
@@ -75,6 +74,7 @@ body {
           height: 40px;
           color: white;
           background-color: #303030;
+          border: none;
           &:hover {
             background-color: black;
           }
