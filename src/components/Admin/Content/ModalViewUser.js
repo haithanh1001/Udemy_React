@@ -3,11 +3,10 @@ import Button from "react-bootstrap/Button";
 // import _default from "react-bootstrap/Modal";
 import Modal from "react-bootstrap/Modal";
 import { FcPlus } from "react-icons/fc";
-import { toast } from "react-toastify";
-import { putUpdateUser } from "../../../services/apiService";
+
 import _ from "lodash";
 const ModalUpdateUser = (props) => {
-  const { show, setShow, fetchListUsers, dataUpdate, resetUpdateData } = props;
+  const { show, setShow, dataUser, resetUserData } = props;
   const handleClose = () => {
     setShow(false);
     setEmail("");
@@ -16,7 +15,7 @@ const ModalUpdateUser = (props) => {
     setImage("");
     setRole("USER");
     setPreviewImage("");
-    resetUpdateData();
+    resetUserData("");
   };
   // const handleShow = () => setShow(true);
   const [email, setEmail] = useState("");
@@ -27,38 +26,16 @@ const ModalUpdateUser = (props) => {
   const [previewImage, setPreviewImage] = useState("");
 
   useEffect(() => {
-    // console.log("run effect... ");
-    if (!_.isEmpty(dataUpdate)) {
-      setEmail(dataUpdate.email);
-      setUsername(dataUpdate.username);
-      setRole(dataUpdate.role);
+    if (!_.isEmpty(dataUser)) {
+      setEmail(dataUser.email);
+      setUsername(dataUser.username);
+      setRole(dataUser.role);
       setImage("");
-      if (dataUpdate.image) {
-        setPreviewImage(`data:image/jpeg;base64,${dataUpdate.image}`);
+      if (dataUser.image) {
+        setPreviewImage(`data:image/jpeg;base64,${dataUser.image}`);
       }
     }
-  }, [dataUpdate]);
-  const handleUploadImage = (event) => {
-    if (event.target && event.target.files && event.target.files[0]) {
-      setPreviewImage(URL.createObjectURL(event.target.files[0]));
-      setImage(event.target.files[0]);
-    } else {
-      // console.log("upload file", event.target.files[0]);
-    }
-  };
-  const handleSubmitCreateUser = async () => {
-    let data = await putUpdateUser(dataUpdate.id, username, role, image);
-    console.log(">>>>Data: ", data);
-    if (data && data.EC === 0) {
-      toast.success(data.EM);
-      handleClose();
-      await fetchListUsers();
-    } else if (data && data.EC !== 0) {
-      toast.error(data.EM);
-    }
-  };
-
-  console.log(">>> check render data update: ", dataUpdate);
+  }, [dataUser]);
   return (
     <>
       {/* <Button variant="primary" onClick={handleShow}>
@@ -83,6 +60,7 @@ const ModalUpdateUser = (props) => {
                 type="email"
                 className="form-control"
                 value={email}
+                disabled
                 onChange={(event) => setEmail(event.target.value)}
               />
             </div>
@@ -111,6 +89,7 @@ const ModalUpdateUser = (props) => {
               <select
                 className="form-select"
                 onChange={(e) => setRole(e.target.value)}
+                disabled
                 value={role}
               >
                 <option value="USER">USERS</option>
@@ -126,7 +105,8 @@ const ModalUpdateUser = (props) => {
                 type="file"
                 hidden
                 id="labelUpload"
-                onChange={(e) => handleUploadImage(e)}
+                disabled
+                // onChange={(e) => handleUploadImage(e)}
               />
             </div>
             <div className="col-md-12 img-preview">
@@ -142,9 +122,9 @@ const ModalUpdateUser = (props) => {
           <Button variant="secondary" onClick={handleClose}>
             Close
           </Button>
-          <Button variant="primary" onClick={() => handleSubmitCreateUser()}>
+          {/* <Button variant="primary" onClick={() => handleSubmitCreateUser()}>
             Save
-          </Button>
+          </Button> */}
         </Modal.Footer>
       </Modal>
     </>
