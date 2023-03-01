@@ -1,6 +1,6 @@
 const TableUser = (props) => {
   const { listUsers } = props;
-  console.log(">>>>>table: ", listUsers);
+  // console.log(">>>>>table: ", listUsers);
   return (
     <>
       <table className="table table-info table-bordered table-hover">
@@ -25,7 +25,12 @@ const TableUser = (props) => {
                   <td>{item.role}</td>
                   <td>
                     <button className="btn btn-secondary">View</button>
-                    <button className="btn btn-warning mx-3">Edit</button>
+                    <button
+                      className="btn btn-warning mx-3"
+                      onClick={() => props.handleClickBtnUpdate(item)}
+                    >
+                      Edit
+                    </button>
                     <button className="btn btn-danger">Delete</button>
                   </td>
                 </tr>
