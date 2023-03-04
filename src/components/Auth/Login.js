@@ -23,7 +23,7 @@ const Login = (props) => {
       return;
     }
     if (!password) {
-      toast.error("Invalid email");
+      toast.error("Invalid Password");
       return;
     }
     //submit APIs
@@ -39,7 +39,15 @@ const Login = (props) => {
   return (
     <div className="login-container">
       <div className="header">
-        Don't have an account yet? <button>Sign up</button> Need help?
+        Don't have an account yet?{" "}
+        <button
+          onClick={() => {
+            navigate("/register");
+          }}
+        >
+          Sign up
+        </button>{" "}
+        Need help?
       </div>
       <div className="title col-4 mx-auto">Hoi Dan IT</div>
       <div className="welcome col-4 mx-auto">Hello, who’s this?</div>
