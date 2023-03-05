@@ -1,5 +1,5 @@
 import { useState } from "react";
-import SideBar from "./SideBar";
+import SideBar from "./Sidebar";
 import "./Admin.scss";
 import { FaBars } from "react-icons/fa";
 import { Outlet } from "react-router-dom";
