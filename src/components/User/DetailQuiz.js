@@ -10,7 +10,7 @@ const DetailQuiz = (props) => {
   //   console.log(">>>check params: ", params);
   const quizId = params.id;
   const location = useLocation();
-  console.log("Location: ", location);
+  // console.log("Location: ", location);
   const [dataQuiz, setDataQuiz] = useState([]);
   const [index, setIndex] = useState(0);
   useEffect(() => {
@@ -18,17 +18,17 @@ const DetailQuiz = (props) => {
   }, [quizId]);
   const fetchQuestions = async () => {
     const res = await getDataQuiz(quizId);
-    console.log(">>>Check question: ", res);
+    // console.log(">>>Check question: ", res);
     if (res && res.EC === 0) {
       let raw = res.DT;
-      console.log("Raw data: ", raw);
+      // console.log("Raw data: ", raw);
       let data = _.chain(raw)
 
         // Group the elements of Array based on `color` property
         .groupBy("id")
         // `key` is group's name (color), `value` is the array of objects
         .map((value, key) => {
-          console.log("value ", value, "Key: ", key);
+          // console.log("value ", value, "Key: ", key);
           let answers = [];
           let questionDescription,
             image = null;
@@ -37,15 +37,15 @@ const DetailQuiz = (props) => {
               questionDescription = item.description;
               image = item.image;
             }
+            item.answers.isSelected = false;
             answers.push(item.answers);
           });
 
           return { questionId: key, answers, questionDescription, image };
         })
         .value();
-      console.log("data: ", data);
       setDataQuiz(data);
-      console.log(">>>data quiz: ", dataQuiz);
+      console.log("data React: ", dataQuiz);
     }
   };
   const handlePrev = () => {
@@ -55,6 +55,31 @@ const DetailQuiz = (props) => {
   const handleNext = () => {
     if (dataQuiz && dataQuiz.length > index + 1) {
       setIndex(index + 1);
+    }
+  };
+  const handleCheckbox = (checked, answersId, questionId) => {
+    console.log(`checked = ${checked} a = ${answersId} q = ${questionId}`);
+    let dataQuizClone = _.cloneDeep(dataQuiz);
+    console.log("dataquizClone: ", dataQuizClone);
+    let question = dataQuizClone.find(
+      (item) => +item.questionId === +questionId
+    );
+    if (question && question.answers) {
+      let b = question.answers.map((item) => {
+        if (+item.id === +answersId) {
+          item.isSelected = checked;
+        }
+        return item;
+      });
+      let index = dataQuizClone.findIndex(
+        (item) => +item.questionId === +questionId
+      );
+      console.log("b: ", b);
+      console.log("question: ", question);
+      if (index > -1) {
+        dataQuizClone[index] = question;
+        setDataQuiz(dataQuizClone);
+      }
     }
   };
   return (
@@ -70,6 +95,7 @@ const DetailQuiz = (props) => {
         <div className="q-content">
           <Question
             index={index}
+            handleCheckbox={handleCheckbox}
             data={dataQuiz && dataQuiz.length > 0 ? dataQuiz[index] : []}
           />
         </div>
@@ -79,6 +105,9 @@ const DetailQuiz = (props) => {
           </button>
           <button className="btn btn-primary" onClick={() => handleNext()}>
             Next
+          </button>
+          <button className="btn btn-warning" onClick={() => handleNext()}>
+            Finish
           </button>
         </div>
       </div>
