@@ -65,7 +65,7 @@ const DetailQuiz = (props) => {
       (item) => +item.questionId === +questionId
     );
     if (question && question.answers) {
-      let b = question.answers.map((item) => {
+      question.answers = question.answers.map((item) => {
         if (+item.id === +answersId) {
           item.isSelected = checked;
         }
@@ -74,7 +74,7 @@ const DetailQuiz = (props) => {
       let index = dataQuizClone.findIndex(
         (item) => +item.questionId === +questionId
       );
-      console.log("b: ", b);
+
       console.log("question: ", question);
       if (index > -1) {
         dataQuizClone[index] = question;
