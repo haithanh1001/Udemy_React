@@ -45,7 +45,7 @@ const DetailQuiz = (props) => {
         })
         .value();
       setDataQuiz(data);
-      console.log("data React: ", dataQuiz);
+      // console.log("data React: ", dataQuiz);
     }
   };
   const handlePrev = () => {
@@ -58,9 +58,9 @@ const DetailQuiz = (props) => {
     }
   };
   const handleCheckbox = (checked, answersId, questionId) => {
-    console.log(`checked = ${checked} a = ${answersId} q = ${questionId}`);
+    // console.log(`checked = ${checked} a = ${answersId} q = ${questionId}`);
     let dataQuizClone = _.cloneDeep(dataQuiz);
-    console.log("dataquizClone: ", dataQuizClone);
+    // console.log("dataquizClone: ", dataQuizClone);
     let question = dataQuizClone.find(
       (item) => +item.questionId === +questionId
     );
@@ -75,12 +75,38 @@ const DetailQuiz = (props) => {
         (item) => +item.questionId === +questionId
       );
 
-      console.log("question: ", question);
+      // console.log("question: ", question);
       if (index > -1) {
         dataQuizClone[index] = question;
         setDataQuiz(dataQuizClone);
       }
     }
+  };
+  const handleFinishQuiz = () => {
+    console.log("check data before submit: ", dataQuiz);
+    let payload = {
+      quizId: +quizId,
+      answers: [],
+    };
+    let answers = [];
+    if (dataQuiz && dataQuiz.length > 0) {
+      dataQuiz.forEach((question) => {
+        let questionId = question.questionId;
+        let userAnswerId = [];
+        //todo
+        question.answers.forEach((a) => {
+          if (a.isSelected === true) {
+            userAnswerId.push(a.id);
+          }
+        });
+        answers.push({
+          questionId: +questionId,
+          userAnswerId: userAnswerId,
+        });
+      });
+    }
+    payload.answers = answers;
+    console.log("check data final: ", payload);
   };
   return (
     <div className="detail-quiz-container">
@@ -106,7 +132,10 @@ const DetailQuiz = (props) => {
           <button className="btn btn-primary" onClick={() => handleNext()}>
             Next
           </button>
-          <button className="btn btn-warning" onClick={() => handleNext()}>
+          <button
+            className="btn btn-warning"
+            onClick={() => handleFinishQuiz()}
+          >
             Finish
           </button>
         </div>
